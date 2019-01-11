@@ -135,9 +135,12 @@ In comparison to the copy constructor which is something like,
     }
 
 The actual performance numbers associated with these constructors are as follows. For copy, the percentage utilization is 2.91 from total activities.
- 
+
+![copy_constructor_vector_test_performance](https://user-images.githubusercontent.com/35080897/51024350-9d94fa80-1589-11e9-8af6-f019064ae713.jpeg)
 
 For the move it is just 0.65 %.
+
+![move_constructor_vector_test_performance](https://user-images.githubusercontent.com/35080897/51024408-c6b58b00-1589-11e9-9498-20e4a94739b9.jpeg)
 
  
 What we have seen is that the “move” was indeed proving why he is worthier than the “copy”. But overall why is the “move” costlier than the “copy”?
