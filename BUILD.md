@@ -19,7 +19,7 @@ An executable named vectorCopyMove will be created. Just execute the executable 
 
 ### Prerequisites
 
-   -Valgrind, kcachegrind - http://kcachegrind.sourceforge.net/html/Home.html
+   - Valgrind, kcachegrind - http://kcachegrind.sourceforge.net/html/Home.html.
 
    Once the executable is available, run it with the following command, 
    >valgrind --dump-instr=yes --tool=callgrind ./vectorCopyMove 
