@@ -15,7 +15,7 @@ There is a simple makefile defined. Just execute the following command,
 
 An executable named vectorCopyMove will be created. Just execute the executable in your terminal.
 
-### Working with kcachegrind
+## Working with kcachegrind
 
 ### Prerequisites
 
@@ -26,4 +26,4 @@ An executable named vectorCopyMove will be created. Just execute the executable 
 
    As a result a file "callgrind.out.XXXX" will be created. Now start this generated file with kcachegrind,
 
-   >kcachegrind callgrind.out.XXXX.
+   >kcachegrind callgrind.out.XXXX
