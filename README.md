@@ -126,7 +126,7 @@ BM_VecMove/64           8571 ns       8570 ns      80687
 BM_VecMove/4096       461126 ns     461061 ns       1505
 BM_VecMove/32768     4664562 ns    4663553 ns        113
 BM_VecMove/100000   16424874 ns   16422625 ns         40</b></i>
-</pre
+</pre>
 
 Now when the size of the structure increases, by adding an array e[100] to the node, the copy gets costlier than move eventually. When the number of vector entries reaches somewhere around adding 512, we realize that the move is getting better than copy.
 
