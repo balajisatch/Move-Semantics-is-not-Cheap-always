@@ -1,6 +1,6 @@
 # STL got faster with "move" - Did it?
 
-Note: A previous knowledge in the following topics would be very helpful to appreciate/understand/comment/blame this article. C++ - Move semantics – std::vectors- micro benchmarking etc. 
+*Note: A previous knowledge in the following topics would be very helpful to appreciate/understand/comment/blame this article. C++ - Move semantics – std::vectors- micro benchmarking etc.*
 
 I have written decent chunk of C/C++ codes as a software engineer. All through my experience I have seen that once in every 138 days someone comes up with a topic like, “which is better? C++ or C”. It is easy to get involved in such discussions. Making a statement during such discussions would be like Donald Trump talking about climate change. For a naive viewer it will make sense, but when a real climate scientist hears those arguments it would be like a horror show. Long back, I had such a discussion with my wife, she is a Java developer. I was like, how C/C++ is faster in processing than Java, how it has pointers and we could do magic with it etc. She stopped me interrupting, looking at my eyes, she says, “Being fast is not really a yardstick in every scenario. Sometimes slow and steady is better, if you know what I mean!! “. Of course, I understood exactly what she meant and from that night, I decided that …  making generic statements like “C++ is better than Java” is really not worth it unless we understand the context and requirements. 
 
@@ -15,6 +15,7 @@ Back to the discussion I had. He said, “Vectors became faster since they start
 The main focus of this test is to compare the performance of a vector which  stores an object which “copies” vs the ones which “moves”. We will mainly focus on the copy/move performed during the reallocation mechanism when we perform push_back to the currently full vector. 
 
 Assume the following is the data to be stored in the vector.
+```
 struct node {
   int e[100];
   int a;
@@ -22,9 +23,10 @@ struct node {
   double c;
   char d;
 };
+```
 
 I have created two wrapper classes to store the structure node. One class has implemented move constructor/assignment and aptly named as testMove and the other class which only has the copy constructor is testCopy. When we store these two classes in a vector, during push_back reallocation of vector memory, it will perform copy/move of the appropriate classes to the newly allocated memory. We will test the performance of the vector during this process. 
-
+```
 class testCopy {
    public:
      blah blah blah!!
@@ -38,6 +40,7 @@ class testMove {
  private:
     node *n1=nullptr;
 };
+```
 
 Look at the file vectorTest.cpp to see the complete implementation but I would like to highlight something from the above code snippet. You might have noticed that the testCopy class stores the node directly whereas the testMove stores the node in the heap (a pointer). These two looks basically different and that raises a question if it is fair to compare these two different classes. But the following is the rationale behind this. Let’s assume my product (from pre-C++11 times) has the class testCopy implemented. Now, with C++ 11, after move semantics got introduced I am adding a move constructor/assignment to my class. To properly leverage the advantage I gained with the “move”, I would change the classes private member “node” to a pointer. Only when the data is in the heap (a pointer), I can easily steal the guts of it and thereby make my “move” more sensible. If I still store it in the stack, my “move” should in turn perform a “copy” which kind of breaks the actual purpose/advantage we have with move. 
 
