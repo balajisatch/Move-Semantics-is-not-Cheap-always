@@ -5,9 +5,8 @@
 
 using namespace std;
 
-
 struct node {
-  int e[100];
+  //int e[100];
   int a;
   float b;
   double c;
@@ -22,20 +21,21 @@ void printVect(vector<T> v) {
   }
 }
 
-
 class testCopy {
   public:
     testCopy() {}
     testCopy(const node* dat) {
       memcpy(&n1, dat,sizeof(node));
-      cout << "Inside regular constructor" << endl;  
+      //cout << "Inside regular constructor" << endl;
     }
     testCopy(const testCopy& dat){
       memcpy(&n1, &dat.n1,sizeof(node));
-      cout << "Inside copy constructor" << endl;
+      //cout << "Inside copy constructor" << endl;
     }
 
-    ~testCopy() {cout << "Inside testCopy Destructor" << endl; }
+    ~testCopy() {
+      //cout << "Inside testCopy Destructor" << endl;
+    }
      void printData() { cout << "Values printed " << n1.a << " " << n1.b << " "<<n1.c<< " " << n1.d << endl; }
 
   private:
@@ -47,20 +47,20 @@ class testMove {
   public:
     testMove():n1(nullptr)  {}
     testMove(const node* dat) : n1{new node} { 
-       memcpy(n1, dat,sizeof(node));
-      cout << "Inside regular constructor" << endl;  
+      memcpy(n1, dat,sizeof(node));
+      //cout << "Inside regular constructor" << endl;
     }
 
     testMove(const testMove& dat){
       node *temp = new node;
       memcpy(temp, dat.n1, sizeof(node));
       n1=temp;
-      cout << "Inside copy constructor" << endl;
+      //cout << "Inside copy constructor" << endl;
     }
 
     testMove(testMove&& dat) noexcept : n1{dat.n1} {
       dat.n1 = nullptr;
-      cout << "Inside move constructor" << endl;
+      //cout << "Inside move constructor" << endl;
     }
 
     testMove& operator=(testMove&& dat) noexcept {
@@ -70,12 +70,15 @@ class testMove {
         }
         n1 = dat.n1;
         dat.n1 = nullptr;
-        cout << "Inside move assignment" << endl;
+        //cout << "Inside move assignment" << endl;
       }
       return *this;
     }
 
-    ~testMove() { delete n1; n1=nullptr; cout << "Inside testMove Destructor" << endl;}
+    ~testMove() {
+       delete n1; n1=nullptr;
+       //cout << "Inside testMove Destructor" << endl;
+     }
      void printData() { cout << "Values printed " << n1->a << " " << n1->b << " "<<n1->c<< " " << n1->d << endl; }
 
   private:
@@ -141,9 +144,9 @@ static void BM_VecMove(benchmark::State& state) {
 }
 
 
-#if 0
-BENCHMARK(BM_VecCopy)->Range(1,4096);
-BENCHMARK(BM_VecMove)->Range(1,4096);
+#if 1
+BENCHMARK(BM_VecCopy)->Range(1,100000);
+BENCHMARK(BM_VecMove)->Range(1,100000);
 //BENCHMARK(BM_VecCopy)->Arg(40000);
 //BENCHMARK(BM_VecMove)->Arg(40000);
 BENCHMARK_MAIN();
