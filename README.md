@@ -115,17 +115,17 @@ Benchmark                  Time           CPU Iterations
 BM_VecCopy/1             243 ns        243 ns    2869208
 BM_VecCopy/8            1256 ns       1256 ns     558660
 BM_VecCopy/64           7164 ns       7160 ns      96927
-<b><i>BM_VecCopy/512        132352 ns     132329 ns       5395
+<i>BM_VecCopy/512        132352 ns     132329 ns       5395
 BM_VecCopy/4096      1359904 ns    1359654 ns        499
 BM_VecCopy/32768    13329690 ns   13326112 ns         49
-BM_VecCopy/100000   50061409 ns   50004230 ns         14</b></i>
+BM_VecCopy/100000   50061409 ns   50004230 ns         14</i>
 BM_VecMove/1             315 ns        315 ns    2200089
 BM_VecMove/8            1596 ns       1596 ns     434969
 BM_VecMove/64           8571 ns       8570 ns      80687
-<b><i>BM_VecMove/512         58544 ns      58538 ns      11579
+<i>BM_VecMove/512         58544 ns      58538 ns      11579
 BM_VecMove/4096       461126 ns     461061 ns       1505
 BM_VecMove/32768     4664562 ns    4663553 ns        113
-BM_VecMove/100000   16424874 ns   16422625 ns         40</b></i>
+BM_VecMove/100000   16424874 ns   16422625 ns         40</i>
 </pre>
 
 Now when the size of the structure increases, by adding an array e[100] to the "node", the copy gets costlier than move eventually. When the number of vector entries reaches somewhere around 512, we realize that the move is getting better than copy.
