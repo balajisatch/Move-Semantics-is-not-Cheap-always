@@ -78,7 +78,7 @@ BM_VecCopy/64           4894 ns       4894 ns     136651
 BM_VecCopy/512         31228 ns      31225 ns      21983
 BM_VecCopy/4096       255484 ns     255447 ns       2722
 BM_VecCopy/32768     2275073 ns    2274431 ns        309
-<strong style="color: blue;">BM_VecCopy/100000    7909717 ns    7907723 ns         87</strong>
+<b><i>BM_VecCopy/100000    7909717 ns    7907723 ns         87</b></i>
 BM_VecMove/1             247 ns        247 ns    2846989
 BM_VecMove/8            1337 ns       1336 ns     532322
 BM_VecMove/64           7387 ns       7386 ns      93674
