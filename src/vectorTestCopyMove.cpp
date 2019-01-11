@@ -15,7 +15,6 @@ struct node {
 
 template <typename T>
 void printVect(vector<T> v) {
-
   for(auto &i:v) {
     i.printData();
   }
@@ -32,37 +31,32 @@ class testCopy {
       memcpy(&n1, &dat.n1,sizeof(node));
       //cout << "Inside copy constructor" << endl;
     }
-
     ~testCopy() {
       //cout << "Inside testCopy Destructor" << endl;
     }
-     void printData() { cout << "Values printed " << n1.a << " " << n1.b << " "<<n1.c<< " " << n1.d << endl; }
+    void printData() { cout << "Values printed " << n1.a << " " << n1.b << " "<<n1.c<< " " << n1.d << endl; }
 
   private:
     node n1;
 };
 
-
 class testMove {
   public:
-    testMove():n1(nullptr)  {}
+    testMove():n1(nullptr)  {}  
     testMove(const node* dat) : n1{new node} { 
       memcpy(n1, dat,sizeof(node));
       //cout << "Inside regular constructor" << endl;
     }
-
     testMove(const testMove& dat){
       node *temp = new node;
       memcpy(temp, dat.n1, sizeof(node));
       n1=temp;
       //cout << "Inside copy constructor" << endl;
     }
-
     testMove(testMove&& dat) noexcept : n1{dat.n1} {
       dat.n1 = nullptr;
       //cout << "Inside move constructor" << endl;
     }
-
     testMove& operator=(testMove&& dat) noexcept {
       if(this != &dat) {
         if(n1) {
@@ -74,7 +68,6 @@ class testMove {
       }
       return *this;
     }
-
     ~testMove() {
        delete n1; n1=nullptr;
        //cout << "Inside testMove Destructor" << endl;
@@ -143,16 +136,13 @@ static void BM_VecMove(benchmark::State& state) {
 
 }
 
-
 #if 1
 BENCHMARK(BM_VecCopy)->Range(1,100000);
 BENCHMARK(BM_VecMove)->Range(1,100000);
 //BENCHMARK(BM_VecCopy)->Arg(40000);
 //BENCHMARK(BM_VecMove)->Arg(40000);
 BENCHMARK_MAIN();
-
 #else
-
 int main() {
   vectorWorkCopy(32);
   cout << endl << endl << endl << "Doing Move Work " << endl << endl << endl;
