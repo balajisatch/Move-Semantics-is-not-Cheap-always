@@ -61,7 +61,7 @@ struct node {
   char d;
 };
 ```
-```
+<pre>
 Running ./vectorFilt
 Run on (4 X 3800 MHz CPU s)
 CPU Caches:
@@ -87,7 +87,7 @@ BM_VecMove/4096       388109 ns     388044 ns       1795
 BM_VecMove/32768     3082180 ns    3081843 ns        226
 #BM_VecMove/100000   10442224 ns   10440024 ns         66
 bash-4.2$
-```
+<\pre>
 
 What do we see here? When the struct “node “ is small with just an int, char, float and double, the performance of the copy is far better than move(see the “Time” column) even for 100000 entries added to the vector. Such use cases to store simple datatypes is very prevalent and it happens often. Contradicting the statement that, “Vectors became faster since they started supporting move”, we see that the copy is actually faster here than the move. Now let’s go to the next example,
 
