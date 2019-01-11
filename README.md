@@ -89,7 +89,7 @@ BM_VecMove/32768     3082180 ns    3081843 ns        226
 bash-4.2$
 </pre>
 
-What do we see here? When the struct “node “ is small (Eg, with just an int, char, float and double), the performance of the "copy" is far better than "move"(see the “Time” column) even for 100000 entries added to the vector. Such use cases to store simple datatypes is very prevalent and it happens often. This result contradicts the statement that, “Vectors became faster since they started supporting move”, we see that the copy is actually faster here than the move. Now let’s go to the next example,
+What do we see here? When the struct “node “ is small (Eg, with just an int, char, float and double), the performance of the "copy" is far better than "move"(see the “Time” column) even for 100000 entries added to the vector. Such use cases to store simple datatypes is very prevalent and it happens often. This result contradicts the statement that, “Vectors became faster since they started supporting move”.Rather we see that the copy is actually faster here. Now let’s go to the next example,
 
 ### Result for the testcase 2,
 ```c++
@@ -128,7 +128,7 @@ BM_VecMove/32768     4664562 ns    4663553 ns        113
 BM_VecMove/100000   16424874 ns   16422625 ns         40</b></i>
 </pre>
 
-Now when the size of the structure increases, by adding an array e[100] to the node, the copy gets costlier than move eventually. When the number of vector entries reaches somewhere around adding 512, we realize that the move is getting better than copy.
+Now when the size of the structure increases, by adding an array e[100] to the "node", the copy gets costlier than move eventually. When the number of vector entries reaches somewhere around 512, we realize that the move is getting better than copy.
 
 Let’s go a bit deeper to visualize the internals. I am using the tool kcachegrind to see what exactly is happening inside and which function call takes more time. The complete graph is attached to the repository. Below, I have pasted the relevant snapshot for the discussion,
 
@@ -136,7 +136,7 @@ Let’s go a bit deeper to visualize the internals. I am using the tool kcachegr
 
 This is the call graph of our scenario along with the percentage utilization of the CPU by each function. We see that the *vectorWorkCopy* function takes **47.54%** of CPU time whereas the *vectorWorkMove* takes more, i.e **51.67 %**. Our benchmark already highlighted this.
 
-Though we see that the overall performance of vectorWorkCopy is better than the vectorWorkMove, when we see closer, the push_back of the move was actually cheaper than the push_back of the copy. But you don’t get a “Candy from Willy” for guessing why. This is pretty straight forward.Lets see what the move constructor does, 
+Though we see that the overall performance of *vectorWorkCopy* is better than the *vectorWorkMove*, when we see closer, the push_back of the move was actually cheaper than the push_back of the copy. You don’t get any “Candy from Willy” for guessing why. This is pretty straight forward. Lets see what the move constructor does, 
 
 ```c++
 testMove(testMove&& dat) noexcept : n1{dat.n1} {
@@ -162,6 +162,6 @@ For the move it is just **0.65 %**.
  
 What we have seen is that the “move” was indeed proving why he is worthier than the “copy”. But overall why is the “move” costlier than the “copy”?
 
-This is evident in the details from the first graph. The flow of *vectorWorkMove* performs better in the actual “move” operation since it only moves the heap address whereas the “copy” copies the entire data. But along with that, it also performs extra memory allocation and deletion w.r.t the pointer. The destructor (~) of the *vectorWorkCopy* does nothing whereas the *vectorWorkMove* performs an actual delete. The advantage we gained by having a pointer and moving it instead of copying is negated by the fact that we are performing multiple "new" and "delete" w.r.t the pointer. Depending upon the size of the data and the number of operations, this behavior changes and the “move” becomes economical when the test involves bigger data to be copied which was evident from our testcase 2.
+This is evident in the details from the first graph. The flow of *vectorWorkMove* performs better in the actual “move” operation since it only moves the heap address whereas the “copy” copies the entire data. But along with that, it also performs extra memory allocation and deletion w.r.t the pointer. The destructor (~) of the *vectorWorkCopy* does nothing whereas the *vectorWorkMove* performs an actual **delete**. The advantage we gained by having a pointer and moving it instead of copying is negated by the fact that we are performing multiple "new" and "delete" w.r.t the pointer. Depending upon the size of the data and the number of operations, this behavior changes and the “move” becomes economical when the test involves bigger data to be copied (testcase 2).
 
-Apart from these there are few other factors which probably influenced these results. One for example is the caching scheme of the CPU I tested with. You could see from the logs that the system I used has an L1, L2 and L3 cache. During copy, there are probably lots happening behind w.r.t prefetching and other optimizations. In embedded world, our actual target processors usually do not have such caching possibilities. In such systems, the copy could probably be costlier than our current result and the move might perform better in all the cases. But that is what I would like us all to infer with these tests. Generally, it might look harmless when we make statements like, “STL containers became faster after they started supporting move semantics”. But I believe it is important for us to clearly understand the system, the type of data used, use cases etc., before arriving at a conclusion. If we are doubtful, we only need to benchmark to see what exactly we are dealing with. What do you say? Feel free to share your comments.
+Apart from these there are few other factors which probably influenced our results. One for example is the caching scheme of the CPU I tested with. You could see from the logs that the system I used has an L1, L2 and L3 cache. During copy, there are probably lots happening behind w.r.t prefetching and other optimizations. In embedded world, our actual target processors usually do not have such caching possibilities. In such systems, the copy could probably be costlier than our current result and the move might perform better in all the cases. But that is what I would like us all to infer with these tests. Generally, it might look harmless when we make statements like, “STL containers became faster after they started supporting move semantics”. But I believe it is important for us to clearly understand the system, the type of data used, use cases etc., before arriving at a conclusion. If we are doubtful, we only need to benchmark to see what exactly we are dealing with. What do you say? Feel free to share your comments.
