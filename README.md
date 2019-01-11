@@ -121,7 +121,7 @@ Now when the size of the structure increases, by adding an array e[100] to the n
 
 Let’s go a bit deeper to visualize the internals. I am using the tool kcachegrind to see what exactly is happening inside and which function call takes more time. The complete graph is attached to the repository. Below, I have pasted the relevant snapshot for the discussion,
 
- 
+![vector_copy_move_comparision](https://user-images.githubusercontent.com/35080897/51024281-63c3f400-1589-11e9-84f0-3c81fe9f5dc4.jpeg)
 
 This is the call graph of our scenario along with the percentage utilization of the CPU by each function. We see that the vectorWorkCopy function takes 47.54% of CPU time whereas the vectorWorkMove takes more, i.e 51.67 %. Our benchmark already highlighted this.
 Though we see that the overall performance of vectorWorkCopy is better than the vectorWorkMove, when we see closer, the push_back of the move was actually cheaper than the push_back of the copy. But you don’t get a “Candy from Willy” for guessing why. This is pretty straight forward.Lets see what the move constructor does, 
