@@ -15,7 +15,7 @@ Back to the discussion I had. He said, “Vectors became faster since they start
 The main focus of this test is to compare the performance of a vector which  stores an object which “copies” vs the ones which “moves”. We will mainly focus on the copy/move performed during the reallocation mechanism when we perform push_back to the currently full vector. 
 
 Assume the following is the data to be stored in the vector.
-```
+```c++
 struct node {
   int e[100];
   int a;
@@ -26,7 +26,7 @@ struct node {
 ```
 
 I have created two wrapper classes to store the structure node. One class has implemented move constructor/assignment and aptly named as testMove and the other class which only has the copy constructor is testCopy. When we store these two classes in a vector, during push_back reallocation of vector memory, it will perform copy/move of the appropriate classes to the newly allocated memory. We will test the performance of the vector during this process. 
-```
+```c++
 class testCopy {
    public:
      blah blah blah!!
@@ -52,14 +52,15 @@ The tests were performed with two different inputs,
 The following is the benchmarking result for these cases. You could compile and execute the source code yourselves with the help of the instructions in Install.txt.
 
 Result for the testcase 1,
-```
+```c++
 struct node {
   int a;
   float b;
   double c;
   char d;
 };
-
+```
+````
 Running ./vectorFilt
 Run on (4 X 3800 MHz CPU s)
 CPU Caches:
@@ -85,10 +86,11 @@ BM_VecMove/4096       388109 ns     388044 ns       1795
 BM_VecMove/32768     3082180 ns    3081843 ns        226
 BM_VecMove/100000   10442224 ns   10440024 ns         66
 bash-4.2$
-```
+````
+
 What do we see here? When the struct “node “ is small with just an int, char, float and double, the performance of the copy is far better than move(see the “Time” column) even for 100000 entries added to the vector. Such use cases to store simple datatypes is very prevalent and it happens often. Contradicting the statement that, “Vectors became faster since they started supporting move”, we see that the copy is actually faster here than the move. Now let’s go to the next example,
 
-````
+```c++
 struct node {
   int e[100];
   int a;
@@ -96,7 +98,8 @@ struct node {
   double c;
   char d;
 };
-
+```
+```
 Running ./vectorFilt
 Run on (4 X 3800 MHz CPU s)
 CPU Caches:
@@ -121,7 +124,8 @@ BM_VecMove/512         58544 ns      58538 ns      11579
 BM_VecMove/4096       461126 ns     461061 ns       1505
 BM_VecMove/32768     4664562 ns    4663553 ns        113
 BM_VecMove/100000   16424874 ns   16422625 ns         40
-````
+```
+
 Now when the size of the structure increases, by adding an array e[100] to the node, the copy gets costlier than move eventually. When the number of vector entries reaches somewhere around adding 512, we realize that the move is getting better than copy.
 
 Let’s go a bit deeper to visualize the internals. I am using the tool kcachegrind to see what exactly is happening inside and which function call takes more time. The complete graph is attached to the repository. Below, I have pasted the relevant snapshot for the discussion,
