@@ -25,24 +25,24 @@ struct node {
 };
 ```
 
-I have created two wrapper classes to store the structure **node**. One class has implemented move constructor/assignment and aptly named as **testMove** and the other class which only has the copy constructor is **testCopy**. When we store these two classes in a vector, during push_back reallocation of vector memory, it will perform copy/move of the appropriate classes to the newly allocated memory. We will test the performance of the vector during this process. 
+I have created two wrapper classes to store the structure **node**. One class has implemented move constructor/assignment and aptly named as **testMove** and the other class which only has the copy constructor is **testCopy**. When we store these two classes in a vector, during push_back reallocation, it will perform copy/move of the appropriate classes to the newly allocated memory. We will test the performance of the vector during this process. 
 ```c++
 class testCopy {
-   public:
-     blah blah blah!!
-   private:
+  public:
+    blah blah blah!!
+  private:
     node n1;
 };
 
 class testMove {
   public:
-     blah blah blah !!
- private:
+    blah blah blah !!
+  private:
     node *n1=nullptr;
 };
 ```
 
-Look at the file vectorTest.cpp to see the complete implementation but I would like to highlight something from the above code snippet. You might have noticed that the **testCopy** class stores the "node" directly whereas the **testMove** stores the "node" in the heap (a pointer). These two looks basically different and that raises a question if it is fair to compare these two different classes. But the following is the rationale behind this. Let’s assume my product (from pre-C++11 times) has the class **testCopy** implemented. Now, with C++ 11, after move semantics got introduced I am adding a move constructor/assignment to my class. To properly leverage the advantage I gained with the “move”, I would change the classes private member “node” to a pointer. Only when the data is in the heap (a pointer), I can easily steal the guts of it and thereby make my “move” more sensible. If I still store it in the stack, my “move” should in turn perform a “copy” which kind of breaks the actual purpose/advantage we have with move. 
+Look at the file **vectorTest.cpp** to see the complete implementation but I would like to highlight something from the above code snippet. You might have noticed that the **testCopy** class stores the "node" directly whereas the **testMove** stores the "node" in the heap (a pointer). These two looks basically different and that raises a question if it is fair to compare these two different classes. But the following is the rationale behind this. Let’s assume my product (from pre-C++11 times) has the class **testCopy** implemented. Now, with C++ 11, after move semantics got introduced I am adding a move constructor/assignment to my class. To properly leverage the advantage I gained with the “move”, I would change the classes private member “node” to a pointer. Only when the data is in the heap (a pointer), I can easily steal the guts of it and thereby make my “move” more sensible. If I still store it in the stack, my “move” should in turn perform a “copy” which kind of breaks the actual purpose/advantage we have with "move". 
 
 Now objects of these two classes will be pushed back to vectors. The function *vectorWorkCopy* and *vectorWorkMove* does this for the respective classes. During the periodic resizing of the vector push_back, the vector will have to allocate a bigger chunk of memory, copy the existing objects to the new memory and delete the objects in the old memory before freeing it. During this process, while copying the existing objects, the vector which stored the *testCopy* class would perform an actual copy(copy constructor) of node whereas the *testMove* class will perform a move(move constructor). We will micro benchmark these two functions *vectorWorkCopy* and *vectorWorkMove* and compare the results.  I used google benchmark for this. 
 
@@ -89,7 +89,7 @@ BM_VecMove/32768     3082180 ns    3081843 ns        226
 bash-4.2$
 </pre>
 
-What do we see here? When the struct “node “ is small with just an int, char, float and double, the performance of the copy is far better than move(see the “Time” column) even for 100000 entries added to the vector. Such use cases to store simple datatypes is very prevalent and it happens often. Contradicting the statement that, “Vectors became faster since they started supporting move”, we see that the copy is actually faster here than the move. Now let’s go to the next example,
+What do we see here? When the struct “node “ is small (Eg, with just an int, char, float and double), the performance of the "copy" is far better than "move"(see the “Time” column) even for 100000 entries added to the vector. Such use cases to store simple datatypes is very prevalent and it happens often. This result contradicts the statement that, “Vectors became faster since they started supporting move”, we see that the copy is actually faster here than the move. Now let’s go to the next example,
 
 ### Result for the testcase 2,
 ```c++
