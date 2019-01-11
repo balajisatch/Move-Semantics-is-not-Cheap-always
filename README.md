@@ -78,14 +78,14 @@ BM_VecCopy/64           4894 ns       4894 ns     136651
 BM_VecCopy/512         31228 ns      31225 ns      21983
 BM_VecCopy/4096       255484 ns     255447 ns       2722
 BM_VecCopy/32768     2275073 ns    2274431 ns        309
-\*BM_VecCopy/100000    7909717 ns    7907723 ns         87\*
+<b>BM_VecCopy/100000    7909717 ns    7907723 ns         87</b>
 BM_VecMove/1             247 ns        247 ns    2846989
 BM_VecMove/8            1337 ns       1336 ns     532322
 BM_VecMove/64           7387 ns       7386 ns      93674
 BM_VecMove/512         50187 ns      50181 ns      13153
 BM_VecMove/4096       388109 ns     388044 ns       1795
 BM_VecMove/32768     3082180 ns    3081843 ns        226
-#BM_VecMove/100000   10442224 ns   10440024 ns         66
+<b>BM_VecMove/100000   10442224 ns   10440024 ns         66</b>
 bash-4.2$
 </pre>
 
@@ -101,7 +101,7 @@ struct node {
   char d;
 };
 ```
-```
+<pre>
 Running ./vectorFilt
 Run on (4 X 3800 MHz CPU s)
 CPU Caches:
@@ -115,18 +115,18 @@ Benchmark                  Time           CPU Iterations
 BM_VecCopy/1             243 ns        243 ns    2869208
 BM_VecCopy/8            1256 ns       1256 ns     558660
 BM_VecCopy/64           7164 ns       7160 ns      96927
-BM_VecCopy/512        132352 ns     132329 ns       5395
+<b>BM_VecCopy/512        132352 ns     132329 ns       5395
 BM_VecCopy/4096      1359904 ns    1359654 ns        499
 BM_VecCopy/32768    13329690 ns   13326112 ns         49
-BM_VecCopy/100000   50061409 ns   50004230 ns         14
+BM_VecCopy/100000   50061409 ns   50004230 ns         14</b>
 BM_VecMove/1             315 ns        315 ns    2200089
 BM_VecMove/8            1596 ns       1596 ns     434969
 BM_VecMove/64           8571 ns       8570 ns      80687
-BM_VecMove/512         58544 ns      58538 ns      11579
+<b>BM_VecMove/512         58544 ns      58538 ns      11579
 BM_VecMove/4096       461126 ns     461061 ns       1505
 BM_VecMove/32768     4664562 ns    4663553 ns        113
-BM_VecMove/100000   16424874 ns   16422625 ns         40
-```
+BM_VecMove/100000   16424874 ns   16422625 ns         40</b>
+</pre
 
 Now when the size of the structure increases, by adding an array e[100] to the node, the copy gets costlier than move eventually. When the number of vector entries reaches somewhere around adding 512, we realize that the move is getting better than copy.
 
