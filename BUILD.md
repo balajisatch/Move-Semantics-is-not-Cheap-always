@@ -4,8 +4,7 @@
 
 ### PRE-REQUISITES
 
-  -Google benchmark - https://github.com/google/benchmark.
-  -GCC with >C++11 support.
+  -GCC with >C++11 support, Google benchmark - https://github.com/google/benchmark.
 
 ### Normal compilation
 
