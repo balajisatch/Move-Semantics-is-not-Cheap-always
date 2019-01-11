@@ -52,7 +52,7 @@ The tests were performed with two different inputs,
 
 The following is the benchmarking result for these cases. You could compile and execute the source code yourselves with the help of the instructions in Install.txt.
 
-##Result for the testcase 1,##
+### Result for the testcase 1,
 ```c++
 struct node {
   int a;
@@ -91,7 +91,7 @@ bash-4.2$
 
 What do we see here? When the struct “node “ is small with just an int, char, float and double, the performance of the copy is far better than move(see the “Time” column) even for 100000 entries added to the vector. Such use cases to store simple datatypes is very prevalent and it happens often. Contradicting the statement that, “Vectors became faster since they started supporting move”, we see that the copy is actually faster here than the move. Now let’s go to the next example,
 
-##Result for the testcase 2,##
+### Result for the testcase 2,
 ```c++
 struct node {
   int e[100];
