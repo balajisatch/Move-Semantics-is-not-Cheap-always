@@ -1,6 +1,7 @@
 # STL got faster with "move" - Did it?
 
-*Note: A previous knowledge in the following topics would be very helpful to appreciate/understand/comment/blame this article. C++ - Move semantics - std::vectors - micro benchmarking etc.*
+*Note: A previous knowledge in the following topics would be very helpful to appreciate/understand/comment on this article.
+C++ - Move semantics - std::vectors - micro benchmarking etc.*
 
 I have written decent chunk of C/C++ codes as a software engineer. All through my experience I have seen that once in every 138 days someone comes up with a topic like, *“which is better? C++ or C”*. Long back, I had such a discussion with my wife, she is a Java developer. I was like, how C/C++ is faster in processing than Java, how it has pointers and we could do magic with it etc. She stopped me interrupting, looking at my eyes, she says, *“Being fast is not really a yardstick in every scenario. Sometimes slow and steady is better, if you know what I mean!! “*. Of course, I understood exactly what she meant and from that night, I decided that …  making generic statements like “C++ is better than Java” is really not worth it unless we understand the context and requirements. 
 
