@@ -54,7 +54,7 @@ The tests were performed with two different inputs,
 1) The struct "node" has the array e[100] commented out , i.e, it only has an int, float, double and char.
 2) With the array e[100] included, basically a bigger structure. 
 
-The following is the benchmarking result for these cases. You could compile and execute the source code yourselves with the help of the instructions in Install.txt.
+The following is the benchmarking result for these cases. You could compile and execute the source code yourselves with the help of the instructions in BUILD.md.
 
 ### Result for the testcase 1,
 ```c++
