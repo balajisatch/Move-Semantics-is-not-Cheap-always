@@ -140,7 +140,7 @@ Let’s go a bit deeper to visualize the internals. I am using the tool **kcache
 
 This is the call graph of our scenario along with the percentage utilization of the CPU by each function. We see that the *vectorWorkCopy* function takes **47.54%** of CPU time whereas the *vectorWorkMove* takes more, i.e **51.67 %**. Our benchmark already highlights this.
 
-Though we see that the overall performance of *vectorWorkCopy* is better than the *vectorWorkMove*, when we take a closer look, the push_back of the move was actually cheaper than the push_back of the copy. You don’t get any “Candy from Willy” for guessing why. This is pretty straight forward. Lets see what the move constructor does, 
+Though we see that the overall performance of *vectorWorkCopy* is better than the *vectorWorkMove* in testcase 1, when we take a closer look, the push_back of the move was actually cheaper than the push_back of the copy. You don’t get any “Candy from Willy” for guessing why. This is pretty straight forward. Lets see what the move constructor does, 
 
 ```c++
 testMove(testMove&& dat) noexcept : n1{dat.n1} {
