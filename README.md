@@ -3,7 +3,7 @@
 *Note: A previous knowledge in the following topics would be very helpful to appreciate/understand/comment on this article.
 C++ - Move semantics - std::vectors - micro benchmarking etc.*
 
-I have written decent chunks of C/C++ code as a software engineer. Till date I have seen that once in every 138 days someone comes up with a topic like, *“which is better? C++ or C?”*. Such discussions mostly do not involve a deeper insight. They are often generic.
+I have written decent chunks of C/C++ code as a software engineer. Till date I have seen that once in every 138 days someone comes up with a topic like, *“which is better? C++ or C?”*. Such discussions mostly do not involve a deeper insight. We can get away making few generic statements.
 
 Talking about making generic statements, I am writing this article to highlight one such incident. This happened during an interview process. The discussion was about the changes that C++11 brought in. We talked about "Move Semantics". I was told that due to the introduction of “move” in c++11, the performance of STL containers had become automatically faster. We were specifically talking about the STL container std::vector. 
 
