@@ -134,7 +134,7 @@ BM_VecMove/100000   16424874 ns   16422625 ns         40</i>
 
 Now when the size of the structure increases, by adding an array e[100] to the "node", the copy gets costlier than move eventually. When the number of vector entries reach somewhere around 512, we realize that the move is getting better than copy.
 
-Let’s go a bit deeper to visualize the internals. I am using the tool **kcachegrind** to see what exactly is happening inside and which function call takes more time. The complete graph is attached to the repository. Below, I have pasted the relevant snapshot for the discussion,
+Let’s go a bit deeper to visualize the internals. I am using the tool **kcachegrind** to see what exactly is happening inside and which function call takes more time. The complete graph is attached to the repository. Below, I have pasted the relevant snapshot for the discussion. This is the snapshot of the flow while executing testcase 1.
 
 ![vector_copy_move_comparision](https://user-images.githubusercontent.com/35080897/51024281-63c3f400-1589-11e9-84f0-3c81fe9f5dc4.jpeg)
 
